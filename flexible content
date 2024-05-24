@@ -1,0 +1,14 @@
+<?php if( have_rows('content') ): ?>
+    <?php while( have_rows('content') ): the_row(); ?>
+        <?php if( get_row_layout() == 'paragraph' ): ?>
+            <?php the_sub_field('paragraph'); ?>
+        <?php elseif( get_row_layout() == 'image' ): 
+            $image = get_sub_field('image');
+            ?>
+            <figure>
+                <?php echo wp_get_attachment_image( $image['ID'], 'full' ); ?>
+                <figcaption><?php echo $image['caption']; ?></figcaption>
+            </figure>
+        <?php endif; ?>
+    <?php endwhile; ?>
+<?php endif; ?>
