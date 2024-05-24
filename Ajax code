@@ -1,0 +1,130 @@
+Step 1: Create Custom Post Type
+First, ensure you have a custom post type registered. You can add this code to your theme's functions.php file:
++++++++++++++++++++++++++++++++++++++++++++++++
+
+function create_custom_post_type() {
+    register_post_type('custom_type',
+        array(
+            'labels'      => array(
+                'name'          => __('Custom Types'),
+                'singular_name' => __('Custom Type'),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+            'rewrite'     => array('slug' => 'custom-types'),
+            'supports'    => array('title', 'editor', 'thumbnail'),
+        )
+    );
+}
+add_action('init', 'create_custom_post_type');
+
+
++++++++++++++++++++++++++++++++++++++++++++++++
+Step 2: Enqueue Scripts and Localize AJAX URL
+Next, enqueue your scripts and localize the AJAX URL in your theme's functions.php:
+
+function enqueue_custom_scripts() {
+    wp_enqueue_script('custom-filter', get_template_directory_uri() . '/js/custom-filter.js', array('jquery'), null, true);
+
+    // Localize the script with new data
+    $ajax_params = array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+    );
+    wp_localize_script('custom-filter', 'ajax_params', $ajax_params);
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
+
+
+Step 3: Create the JavaScript File
+Create a JavaScript file named custom-filter.js in your theme's js directory:
+
+jQuery(document).ready(function($) {
+    $('#filter').submit(function(event) {
+        event.preventDefault();
+
+        var filter = $('#filter');
+        $.ajax({
+            url: ajax_params.ajax_url,
+            data: filter.serialize(),
+            type: 'POST',
+            success: function(data) {
+                $('#response').html(data);
+            }
+        });
+    });
+});
+
++++++++++++++++++++++++++++++++++++++++++++++++
+Step 4: Add HTML for the Filter Form
+Add the following HTML where you want the filter form to appear (e.g., in a template file):
+
+<form id="filter">
+    <select name="category">
+        <option value="">Select Category</option>
+        <!-- Add your categories here -->
+    </select>
+    <button>Filter</button>
+</form>
+
+<div id="response"></div>
+
++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+Step 5: Handle AJAX Request in WordPress
+Add AJAX handlers to your theme's functions.php
+
+
+function custom_filter_function() {
+    $args = array(
+        'post_type' => 'custom_type',
+        'posts_per_page' => -1,
+    );
+
+    if (isset($_POST['category']) && $_POST['category'] != '') {
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'category',
+                'field' => 'id',
+                'terms' => $_POST['category'],
+            ),
+        );
+    }
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) :
+        while ($query->have_posts()): $query->the_post();
+            echo '<div>';
+            echo '<h2>' . get_the_title() . '</h2>';
+            echo '<div>' . get_the_excerpt() . '</div>';
+            echo '</div>';
+        endwhile;
+        wp_reset_postdata();
+    else :
+        echo 'No posts found';
+    endif;
+
+    die();
+}
+add_action('wp_ajax_custom_filter', 'custom_filter_function');
+add_action('wp_ajax_nopriv_custom_filter', 'custom_filter_function');
+
++++++++++++++++++++++++++++++++++++++++++++++++
+
+Step 6: Implement the Filter Logic
+<form id="filter">
+    <select name="category">
+        <option value="">Select Category</option>
+        <?php
+        $categories = get_terms('category');
+        foreach ($categories as $category) {
+            echo '<option value="' . $category->term_id . '">' . $category->name . '</option>';
+        }
+        ?>
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+<div id="response"></div>
