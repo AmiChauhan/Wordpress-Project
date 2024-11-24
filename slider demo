@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,165 +6,145 @@
   <title>Document</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
-
-
   <style>
-/* Slider Container */
-.slick-slider {
-  max-width: 100%;
-  margin: 0 auto;
-  overflow: hidden;
-}
+    /* Slider Container */
+    .slick-slider {
+      max-width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+    }
 
-/* Slide Styling */
-.slick-slide {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border: 1px solid #ccc;
-  height: 150px;
-  color: #fff;
-  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
-  background: #ddd;
-}
+    /* Slide Styling */
+    .slick-slide {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border: 1px solid #ccc;
+      height: 150px;
+      color: #fff;
+      transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+      background: #ddd;
+    }
 
-/* Size Modifiers */
-.extra-small {
-  width: 200px !important;
-  height: 250px !important;
-  background-color: #aaa;
-  z-index: 1;
-}
-.small {
-  width: 250px !important;
-  height: 300px !important;
-  background-color: #aaa;
-  z-index: 1;
-}
+    /* Size Modifiers */
+    .extra-small {
+      width: 200px !important;
+      height: 250px !important;
+      background-color: #aaa;
+      z-index: 1;
+    }
+    .small {
+      width: 250px !important;
+      height: 300px !important;
+      background-color: #aaa;
+      z-index: 1;
+    }
 
-.medium {
-  width: 300px !important;
-  height: 350px !important;
-  background-color: #888;
-  z-index: 2;
-}
+    .medium {
+      width: 300px !important;
+      height: 350px !important;
+      background-color: #888;
+      z-index: 2;
+    }
 
-.big {
-  width: 350px !important;
-  height: 400px !important;
-  background-color: #555;
-  z-index: 3;
-}
+    .big {
+      width: 350px !important;
+      height: 400px !important;
+      background-color: #555;
+      z-index: 3;
+    }
 
-/* Hidden Slides */
-.slick-slide[style*="display: none"] {
-  display: none !important;
-}
+    /* Hidden Slides */
+    .slick-slide[style*="display: none"] {
+      display: none !important;
+    }
 
-/* Navigation Buttons */
-.slick-prev,
-.slick-next {
-  background-color: #333;
-  color: white;
-  font-size: 20px;
-  border: none;
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  line-height: 40px;
-  text-align: center;
-  z-index: 2;
-}
-.slick-track {
-    display: flex;
-    align-items: end;
-}
+    /* Navigation Buttons */
+    .slick-prev,
+    .slick-next {
+      background-color: #333;
+      color: white;
+      font-size: 20px;
+      border: none;
+      border-radius: 50%;
+      height: 40px;
+      width: 40px;
+      line-height: 40px;
+      text-align: center;
+      z-index: 2;
+    }
 
+    .slick-track {
+      display: flex;
+      align-items: end;
+    }
+
+    .slick-slide {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .slick-list {
+      margin-left: -10px;
+      margin-right: -10px;
+    }
 
   </style>
 </head>
 <body>
 
+  <div class="slider">
+    <div class="slide">1</div>
+    <div class="slide">2</div>
+    <div class="slide">3</div>
+    <div class="slide">4</div>
+    <div class="slide">5</div>
+    <div class="slide">6</div>
+    <div class="slide">7</div>
+    <div class="slide">8</div>
+    <div class="slide">9</div>
+    <div class="slide">10</div>
+  </div>
 
-  
-    <div class="slider">
-        <div class="slide">1</div>
-        <div class="slide">2</div>
-        <div class="slide">3</div>
-        <div class="slide">4</div>
-        <div class="slide">5</div>
-        <div class="slide">6</div>
-        <div class="slide">7</div>
-        <div class="slide">8</div>
-        <div class="slide">9</div>
-        <div class="slide">10</div>
-      </div>
-      
-      
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 
+  <script>
+    $(document).ready(function () {
+      $('.slider').slick({
+        slidesToShow: 7, // Show 7 slides in view
+        slidesToScroll: 1, // Scroll 1 slide at a time
+        infinite: true, // Enable infinite scrolling
+        arrows: true, // Enable navigation arrows
+        centerMode: true, // Center the active slide
+        focusOnSelect: true, // Allow clicking to select slides
+      });
 
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-<script>
-$(document).ready(function () {
-  $('.slider').slick({
-    slidesToShow: 7, // Show 7 slides in view
-    slidesToScroll: 1, // Scroll 1 slide at a time
-    infinite: true, // Enable infinite scrolling
-    arrows: true, // Enable navigation arrows
-    centerMode: true, // Keep all slides aligned (no centering)
-    focusOnSelect: true, // Allow clicking to select slides
-  });
-
-  // Add custom classes dynamically on initialization and before slide change
-  const updateSlideClasses = (slick, currentSlide) => {
-    const slides = slick.$slides; // Get all slides
-    const totalSlides = slides.length;
-
-    slides.removeClass('extra-small small medium big'); // Reset classes
-
-    // Add classes dynamically
-    slides.each(function (index) {
-      const relativeIndex = (index - currentSlide + totalSlides) % totalSlides;
-//   console.log(relativeIndex);
-      if (relativeIndex === 0) {
-        $(this).addClass('big'); // Center slide
-      } else if (relativeIndex === 1 || relativeIndex === totalSlides - 1) {
-        $(this).addClass('medium'); // Adjacent slides
-      } else if (relativeIndex === 2 || relativeIndex === totalSlides - 2) {
-        $(this).addClass('small'); // Outer visible slides
-      }else if (relativeIndex === 3 || relativeIndex === totalSlides - 3) {
-        $(this).addClass('extra-small'); // Outer visible slides
+      function applyClass(){
+        $('.slick-slide').removeClass('big medium small extra-small');
+        $('.slick-center').addClass('big');
+        $('.slick-center').prev().addClass('medium');
+        $('.slick-center').next().addClass('medium');
+        $('.slick-center').prev().prev().addClass('small');
+        $('.slick-center').next().next().addClass('small');
+        $('.slick-center').prev().prev().prev().addClass('extra-small');
+        $('.slick-center').next().next().next().addClass('extra-small');
       }
-       else {
-        $(this).removeClass('extra-small small medium big'); // Reset hidden slides
-      }
+      
+
+      // Update classes before slide change
+      $('.slider').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+        applyClass();
+      });
+      $('.slider').on('afterChange', function (event, slick, currentSlide) {
+        applyClass();
+      });
+    applyClass();
+      
     });
-  };
+  </script>
 
-  // Initial class assignment
-  $('.slider').on('init', function (event, slick) {
-    updateSlideClasses(slick, slick.currentSlide);
-  });
-
-  // Update classes before slide change
-  $('.slider').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
-    updateSlideClasses(slick, nextSlide);
-  });
- 
-
-  // Initialize the slider
-  $('.slider').slick('slickGoTo', 0); // Trigger the first update
-});
-
-    </script>
-  
 </body>
 </html>
-
-
-
-
-
