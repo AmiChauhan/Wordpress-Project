@@ -1,0 +1,44 @@
+<div class="pro-list-main-wrapper">
+    <div class="container">
+        <div class="filter-main-wrapper">
+            <div class="pro-cat-filter-wrapper">
+                <div class="pro-content-wrap">
+                    <h2>Current Listing</h2>
+                </div>
+
+                <!-- Taxonomy Filter Buttons -->
+                <?php
+                $terms = get_terms([
+                    'taxonomy'   => 'property-type',
+                    'hide_empty' => false,
+                ]);
+
+                if (!empty($terms) && !is_wp_error($terms)) {
+                    // Only get the first 3 terms
+                    $terms = array_slice($terms, 0, 3);
+                    ?>
+                    <div id="property-filter-buttons">
+                        <?php foreach ($terms as $index => $term): ?>
+                            <button 
+                                class="property-filter-btn <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                data-slug="<?php echo esc_attr($term->slug); ?>">
+                                <?php echo esc_html($term->name); ?>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php
+                }
+                ?>
+                </div>
+                <!-- Property Listing & Load More -->
+                <div class="property-list"></div>
+                <button class="load-more" style="display: none;">Load More</button>
+            </div>
+    </div>
+</div>
+
+<div class="loader-overlay" style="display: none;">
+  <div class="loader-spinner">
+    <img src="http://localhost/creative/wp-content/uploads/2025/06/loading.gif" alt="Loading..." />
+  </div>
+</div>
