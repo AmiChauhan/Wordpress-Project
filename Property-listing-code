@@ -1,3 +1,44 @@
+SLANT DESIGN CURV CODE
+
+/* banner slant css */
+.banner-alt {
+  position: relative;
+  overflow: hidden;
+  height: 60vh;
+}
+
+.banner-alt img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner-alt::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background: white; /* or same as background */
+  transform: skewY(-5deg);
+  transform-origin: top left;
+}
+
+.banner {
+  position: relative;
+  overflow: hidden;
+  height: 500px;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+clip-path: polygon(50% 0%, 100% 0, 100% 75%, 29% 100%, 29% 100%, 0 75%, 0 0)
+}
+
+
 ++++++++++++++++++++++++  Header.php  +++++++++++++++++++++++++
 <?php
 /**
@@ -40,10 +81,7 @@
 			<?php endif; ?>
 		</div><!-- .site-branding -->
 
-		<nav id="site-navigation" class="main-navigation sidebar-menu">
-    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-        <?php esc_html_e( 'Primary Menu', 'myfirstsite' ); ?>
-    </button>
+	<nav id="site-navigation" class="main-navigation sidebar-menu">
     <?php
     wp_nav_menu(
         array(
@@ -54,7 +92,12 @@
         )
     );
     ?>
-</nav><!-- #site-navigation -->
+	<div class="togglebutton">
+		<span class="one"></span>
+		<span class="two"></span>
+        <span class="three"></span>
+    </div>
+   </nav><!-- #site-navigation -->
 
 		</div>
 		</div>
@@ -658,9 +701,96 @@ jQuery(document).ready(function ($) {
 
 
 
++++++++++++++++++++++++++++++++++++ MENU MOBILE CODE ++++++++++++++++++++++++++++++++
+/* MOBILE MENU CSS */
+.togglebutton span {
+    width: 25px;
+    display: none;
+    height: 2px;
+    background-color: #fff;
+    margin: 6px 0;
+
+}
+
+.togglebutton {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translatey(-50%);
+}
+
+@media (max-width: 768px) {
+   .togglebutton span {
+    display: block;
+   }
+   .main-navigation ul {
+    padding-top: 50px;
+        position: fixed;
+        left: -300px;
+        top: 0;
+        width: 300px;
+        height: 100%;
+        background: #000000;
+        transition: left 0.3s ease-in-out;
+        z-index: 1000;
+   }
+   .menu-open.main-navigation ul {
+  left: 0; /* slide in */
+   }
+  .main-navigation ul li {
+    display: block;
+    padding: 10px 20px;
+    text-align: left;
+    border-bottom: 1px solid;
+}
+nav#site-navigation {
+  position: inherit;
+}
+.togglebutton {
+    position: absolute;
+    right: 35px;
+    top: 50px;
+    transform: translatey(-50%);
+}
+.cross-button {
+   cursor: pointer;
+        font-size: 30px;
+        text-align: right;
+        padding: 10px;
+        list-style: none;
+        color: #ffffff;
+        position: absolute !important;
+        top: 0px;
+        right: 0;
+        border-bottom: 0 !important;
+}
+
+}
+
++++++++++++++++++++++++++++++++++ MAIN JS ++++++++++++++++++++++++++++++++++
 
 
+jQuery(document).ready(function($) {
+    $('.togglebutton').on('click', function() {
+        const $menu = $('.main-navigation ul');
+        const crossBtn = '<li class="cross-button">×</li>';
 
+        // Remove existing cross button if already present
+        $menu.find('.cross-button').remove();
+
+        // Append cross button
+        $menu.append(crossBtn);
+
+        // Optional: Add class to show menu (if you use CSS for toggle)
+        $('.main-navigation').toggleClass('menu-open');
+    });
+
+    // Handle click on the cross button to close/hide menu
+    $(document).on('click', '.cross-button', function() {
+        $('.main-navigation').removeClass('menu-open');
+        $(this).remove(); // remove the cross button itself
+    });
+});
 
 
 
